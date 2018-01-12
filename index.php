@@ -6,7 +6,7 @@
 	</head>
 	<body>
 		<header>
-			<h1>Data Design Project</h1>
+			<h1>Data Design Project | Phase 0</h1>
 			<nav>
 				<ul>
 					<li>Persona</li>
@@ -61,6 +61,69 @@
 				<li>Andrew writes response and publishes it</li>
 				<li>MEDIUM STORES AND DISPLAYS RESPONSE</li>
 			</ol>
+		</section>
+		<section>
+			<h3>Conceptual Model</h3>
+			<h4>Example of Entity and its' Attributes</h4>
+			<dl>
+				<dt>Entity</dt>
+				<dd>-Attribute</dd>
+				<dd>-Attribute</dd>
+			</dl>
+			<br/>
+			<dl>
+				<dt>NEW USER</dt>
+				<dd>userFirstName</dd>
+				<dd>userLastName</dd>
+				<dd>userId</dd>
+				<dd>userEmail</dd>
+			</dl>
+			<dl>
+				<dt>PROFILE</dt>
+				<dd>profileName</dd>
+				<dd>city</dd>
+				<dd>profileId</dd>
+				<dd>profileEmail</dd>
+			</dl>
+			<dl>
+				<dt>AUTHOR</dt>
+				<dd>authorFirstName</dd>
+				<dd>authorLastName</dd>
+				<dd>authorProfileName</dd>
+				<dd>authorEmail</dd>
+				<dd>city</dd>
+			</dl>
+			<dl>
+				<dt>ARTICLES</dt>
+				<dd>articleTitle</dd>
+				<dd>articleDate</dd>
+				<dd>articleLength</dd>
+				<dd>articleAuthor</dd>
+			</dl>
+			<dl>
+				<dt>RESPONSES</dt>
+				<dd>responseId</dd>
+				<dd>responseAuthor</dd>
+				<dd>responseDate</dd>
+				<dd>responseLength</dd>
+			</dl>
+			<dl>
+				<dt>BOOKMARKS</dt>
+				<dd>bookmarkId</dd>
+				<dd>bookmarkTarget</dd>
+				<dd>bookmarkDate</dd>
+				<dd>bookmarkTitle</dd>
+			</dl>
+			<dl>
+				<dt>TAG</dt>
+				<dd>tagId</dd>
+				<dd>tagName</dd>
+			</dl>
+			<dl>
+				<dt>CLAP</dt>
+				<dd>clapId</dd>
+				<dd>clapProfileId</dd>
+			</dl>
 		</section>
 	</body>
 </html>
