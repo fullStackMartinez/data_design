@@ -42,5 +42,25 @@
 				<li>As a Profile, I'd like to SHARE Articles</li>
 			</ul>
 		</section>
+		<section>
+			<h3>Use Case and Interaction Flow</h3>
+			<h4>Use Case</h4>
+			<p>Andrew just got back from a trip to San Francisco where he met with local artists in their
+				Hispanic community. Having had a great and informative trip, Andrew wants to SEARCH and READ a post made by
+				an artist he met, Diego Castro, and WRITE a response to that article.</p>
+			<p>Precondition: Andrew is REGISTERED and SIGNED INTO his Medium.com account</p>
+			<p>Post-condition: Andrew's response is displayed with other responses on Medium.com</p>
+			<h4>Interaction Flow</h4>
+			<ol>
+				<li>Andrew searches Diego Castro from search bar</li>
+				<li>MEDIUM DISPLAYS ARTICLES WRITTEN BY DIEGO CASTRO</li>
+				<li>Andrew chooses one article</li>
+				<li>MEDIUM DISPLAYS THE ARTICLE</li>
+				<li>Andrew reads the article and clicks the response box</li>
+				<li>MEDIUM EXPANDS RESPONSE BOX</li>
+				<li>Andrew writes response and publishes it</li>
+				<li>MEDIUM STORES AND DISPLAYS RESPONSE</li>
+			</ol>
+		</section>
 	</body>
 </html>
