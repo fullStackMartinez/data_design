@@ -125,5 +125,21 @@
 				<dd>clapProfileId</dd>
 			</dl>
 		</section>
+		<section>
+			<h3>Relationships</h3>
+			<ul>
+				<li>author ---articles  0 to many <br/>
+					articles --- author 1 and only 1</li>
+				<li>profile---responses   0 to many<br/>
+					responses---profile 1 and only 1</li>
+				<li>profile ---articles  0 to many</li>
+				<li>author---responses 0 to many</li>
+				<li>profile ---bookmarks 0 to many<br/>
+					bookmark--profile 1 to many</li>
+				<li>profile ---clap 0 to many</li>
+				<li>author---tag  0 to many<br/>
+					tag--author  1 to many</li>
+			</ul>
+		</section>
 	</body>
 </html>
