@@ -19,9 +19,9 @@
 		<section>
 			<h3>Persona</h3>
 			<p>Name: Andrew Candelaria<br>Age: 34<br>Male<br>Albuquerque, NM</p><br>
-			<p>Andrew is a 34 year old male painter who lives in downtown Albuquerque. He is surrounded by the heart and soul
+			<p>Andrew is a 28 year old male painter who lives in downtown Albuquerque. He is surrounded by the heart and soul
 				of the city, feeling every breath and using it to fuel his art. Andrew is interested in building a community
-				of like minded artists by reading, learning and blogging about "Hispanic Art in New Mexico". He currently works at a
+				of like minded artists by reading, learning and blogging about &quot;Hispanic Art in New Mexico&quot;. He currently works at a
 				a brewery serving local beers.</p>
 			<p>Andrew loves art, and loves to be involved with all kinds or artists, but prefers to paint. He's likeable, he's social
 				and serious about his art, and serious about expressing this love online.</p>
@@ -30,26 +30,26 @@
 				in an hour.</p>
 		</section>
 		<section>
-			<h3>User Cases</h3>
+			<h3>User Stories</h3>
 			<ul>
-				<li>As a NEW USER, I'd like to REGISTER for a PROFILE</li>
-				<li>As a registered USER, I'd like to BUILD my Profile</li>
-				<li>As an AUTHOR, I'd like to WRITE ARTICLES</li>
-				<li>As a Profile, I'd like to SEARCH TAGS</li>
-				<li>As a READER, I'd like to WRITE COMMENTS/RESPONSES</li>
-				<li>As a READER, I'd like to BOOKMARK BOOKMARKS for later use/reading</li>
-				<li>As a Profile, I'd like to CLAP</li>
-				<li>As a Profile, I'd like to SHARE Articles</li>
+				<li>As a new user, I'd like to register for a profile</li>
+				<li>As a registered user, I'd like to build my profile</li>
+				<li>As an author, I'd like to write articles</li>
+				<li>As a profile, I'd like to search tags</li>
+				<li>As a reader, I'd like to write responses</li>
+				<li>As a reader, I'd like to make bookmarks for later use/reading</li>
+				<li>As a profile, I'd like to clap</li>
+				<li>As a profile, I'd like to share articles</li>
 			</ul>
 		</section>
 		<section>
 			<h3>Use Case and Interaction Flow</h3>
 			<h4>Use Case</h4>
 			<p>Andrew just got back from a trip to San Francisco where he met with local artists in their
-				Hispanic community. Having had a great and informative trip, Andrew wants to SEARCH and READ a post made by
-				an artist he met, Diego Castro, and WRITE a response to that article.</p>
-			<p>Precondition: Andrew is REGISTERED and SIGNED INTO his Medium.com account</p>
-			<p>Post-condition: Andrew's response is displayed with other responses on Medium.com</p>
+				Hispanic community. Having had a great and informative trip, Andrew wants to read a post made by
+				an artist he met, Diego Castro, and make a Clap to that article.</p>
+			<p>Precondition: Andrew is registered and signed into his Medium.com account</p>
+			<p>Post-condition: Andrew's clap is displayed with other claps on Medium.com</p>
 			<h4>Interaction Flow</h4>
 			<ol>
 				<li>Andrew searches Diego Castro from search bar</li>
@@ -70,14 +70,6 @@
 				<dd>-Attribute</dd>
 				<dd>-Attribute</dd>
 			</dl>
-			<br/>
-			<dl>
-				<dt>NEW USER</dt>
-				<dd>userFirstName</dd>
-				<dd>userLastName</dd>
-				<dd>userId</dd>
-				<dd>userEmail</dd>
-			</dl>
 			<dl>
 				<dt>PROFILE</dt>
 				<dd>profileName</dd>
@@ -85,39 +77,13 @@
 				<dd>profileId</dd>
 				<dd>profileEmail</dd>
 			</dl>
-			<dl>
-				<dt>AUTHOR</dt>
-				<dd>authorFirstName</dd>
-				<dd>authorLastName</dd>
-				<dd>authorProfileName</dd>
-				<dd>authorEmail</dd>
-				<dd>city</dd>
-			</dl>
+
 			<dl>
 				<dt>ARTICLES</dt>
 				<dd>articleTitle</dd>
 				<dd>articleDate</dd>
 				<dd>articleLength</dd>
 				<dd>articleAuthor</dd>
-			</dl>
-			<dl>
-				<dt>RESPONSES</dt>
-				<dd>responseId</dd>
-				<dd>responseAuthor</dd>
-				<dd>responseDate</dd>
-				<dd>responseLength</dd>
-			</dl>
-			<dl>
-				<dt>BOOKMARKS</dt>
-				<dd>bookmarkId</dd>
-				<dd>bookmarkTarget</dd>
-				<dd>bookmarkDate</dd>
-				<dd>bookmarkTitle</dd>
-			</dl>
-			<dl>
-				<dt>TAG</dt>
-				<dd>tagId</dd>
-				<dd>tagName</dd>
 			</dl>
 			<dl>
 				<dt>CLAP</dt>
@@ -127,19 +93,6 @@
 		</section>
 		<section>
 			<h3>Relationships</h3>
-			<ul>
-				<li>author ---articles  0 to many <br/>
-					articles --- author 1 and only 1</li>
-				<li>profile---responses   0 to many<br/>
-					responses---profile 1 and only 1</li>
-				<li>profile ---articles  0 to many</li>
-				<li>author---responses 0 to many</li>
-				<li>profile ---bookmarks 0 to many<br/>
-					bookmark--profile 1 to many</li>
-				<li>profile ---clap 0 to many</li>
-				<li>author---tag  0 to many<br/>
-					tag--author  1 to many</li>
-			</ul>
 		</section>
 	</body>
 </html>
