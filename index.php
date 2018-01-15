@@ -71,8 +71,8 @@
 				<dt>Profile</dt>
 				<dd>profileId</dd>
 				<dd>profileName</dd>
-				<dd>firstName</dd>
-				<dd>lastName</dd>
+				<dd>profileFirstName</dd>
+				<dd>profileLastName</dd>
 				<dd>profileCity</dd>
 				<dd>profilePhone</dd>
 				<dd>profileEmail</dd>
