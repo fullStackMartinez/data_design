@@ -46,20 +46,17 @@
 			<h3>Use Case and Interaction Flow</h3>
 			<h4>Use Case</h4>
 			<p>Andrew just got back from a trip to San Francisco where he met with local artists in their
-				Hispanic community. Having had a great and informative trip, Andrew wants to read a post made by
-				an artist he met, Diego Castro, and make a Clap to that article.</p>
+				Hispanic community. Having had a great and informative trip, Andrew wants to write a post about his trip and &quot;clap&quot; to that article.</p>
 			<p>Precondition: Andrew is registered and signed into his Medium.com account</p>
 			<p>Post-condition: Andrew's clap is displayed with other claps on Medium.com</p>
 			<h4>Interaction Flow</h4>
 			<ol>
-				<li>Andrew searches Diego Castro from search bar</li>
-				<li>MEDIUM DISPLAYS ARTICLES WRITTEN BY DIEGO CASTRO</li>
-				<li>Andrew chooses one article</li>
-				<li>MEDIUM DISPLAYS THE ARTICLE</li>
-				<li>Andrew reads the article and clicks the response box</li>
-				<li>MEDIUM EXPANDS RESPONSE BOX</li>
-				<li>Andrew writes response and publishes it</li>
-				<li>MEDIUM STORES AND DISPLAYS RESPONSE</li>
+				<li>Andrew goes to article writing box</li>
+				<li>MEDIUM DISPLAYS PREVIOUSLY WRITTEN ARTICLES BY ANDREW</li>
+				<li>Andrew writes his article</li>
+				<li>MEDIUM SAVES THE ARTICLE</li>
+				<li>Andrew  clicks the clap button</li>
+				<li>MEDIUM RECORDS CLAP</li>
 			</ol>
 		</section>
 		<section>
@@ -71,28 +68,35 @@
 				<dd>-Attribute</dd>
 			</dl>
 			<dl>
-				<dt>PROFILE</dt>
-				<dd>profileName</dd>
-				<dd>city</dd>
+				<dt>Profile</dt>
 				<dd>profileId</dd>
+				<dd>profileName</dd>
+				<dd>firstName</dd>
+				<dd>lastName</dd>
+				<dd>profileCity</dd>
+				<dd>profilePhone</dd>
 				<dd>profileEmail</dd>
+				<dd>profilePassword</dd>
 			</dl>
 
 			<dl>
-				<dt>ARTICLES</dt>
+				<dt>Article</dt>
+				<dd>articleId</dd>
 				<dd>articleTitle</dd>
 				<dd>articleDate</dd>
 				<dd>articleLength</dd>
-				<dd>articleAuthor</dd>
+				<dd>articleProfileId</dd>
 			</dl>
 			<dl>
-				<dt>CLAP</dt>
-				<dd>clapId</dd>
+				<dt>Clap</dt>
 				<dd>clapProfileId</dd>
+				<dd>clapArticleId</dd>
+				<dd>clapDate</dd>
 			</dl>
 		</section>
 		<section>
-			<h3>Relationships</h3>
+			<h3>Entity-Relationship Diagram</h3>
+			<a href="./images/ERD%20%20-%20Page%201.png" alt="Image of ERD"/>
 		</section>
 	</body>
 </html>
