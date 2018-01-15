@@ -96,7 +96,7 @@
 		</section>
 		<section>
 			<h3>Entity-Relationship Diagram</h3>
-			<a href="./images/ERD%20%20-%20Page%201.png" alt="Image of ERD"/>
+			<img src="images/erd.png" alt="ERD image">
 		</section>
 	</body>
 </html>
