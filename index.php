@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Data Design Project| Phase 0</title>
+		<title>Data Design Project| Phase 1</title>
 	</head>
 	<body>
 		<header>
@@ -95,6 +95,7 @@
 			</dl>
 		</section>
 		<section>
+			<h1>Phase 1</h1>
 			<h3>Entity-Relationship Diagram</h3>
 			<img src="images/erd.png" alt="ERD image">
 		</section>
