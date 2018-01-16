@@ -24,3 +24,14 @@ CREATE TABLE article(
 
 );
 
+CREATE TABLE clap (
+	clapProfileId BINARY(16) NOT NULL ,
+	clapArticleId BINARY(16) NOT NULL ,
+	clapDate DATETIME(6) not NULL ,
+	INDEX (clapProfileId),
+	INDEX (clapArticleId),
+	FOREIGN KEY (clapProfileId) REFERENCES profile(profileId),
+	FOREIGN KEY (clapArticleId) REFERENCES article(articleId),
+	PRIMARY KEY (clapProfileId, clapArticleId)
+
+);
