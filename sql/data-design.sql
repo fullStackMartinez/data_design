@@ -12,3 +12,15 @@ CREATE TABLE profile (
 	PRIMARY KEY (profileId)
 
 );
+
+CREATE TABLE article(
+	articleId BINARY(16) NOT NULL,
+	articleProfileId BINARY(16) NOT NULL ,
+	articleTitle VARCHAR(255) NOT NULL ,
+	articleDateTime DATETIME(6) NOT NULL ,
+	INDEX (articleProfileId),
+	FOREIGN KEY (articleProfileId) REFERENCES profile(profileId),
+	PRIMARY KEY (articleId)
+
+);
+
