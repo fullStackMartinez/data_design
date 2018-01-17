@@ -35,3 +35,4 @@ CREATE TABLE clap (
 	PRIMARY KEY (clapProfileId, clapArticleId)
 
 );
+
