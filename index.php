@@ -98,7 +98,7 @@
 		<section>
 			<h1>Phase 1</h1>
 			<h3>Entity-Relationship Diagram</h3>
-			<img src="images/erd1.png" alt="ERD image">
+
 		</section>
 	</body>
 </html>
