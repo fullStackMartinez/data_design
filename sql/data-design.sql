@@ -1,4 +1,7 @@
-ALTER DATABASE emartinez394 CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+DROP TABLE IF EXISTS clap;
+DROP TABLE IF EXISTS article;
+DROP TABLE IF EXISTS profile;
+
 
 CREATE TABLE profile (
 	profileId BINARY(16) NOT NULL,
@@ -8,7 +11,7 @@ CREATE TABLE profile (
 	profilePhone VARCHAR(32),
 	profileEmail VARCHAR(128) NOT NULL,
 	profilePassword VARCHAR(255) NOT NULL,
-	UNIQUE(profileEmail),
+	UNIQUE (profileEmail),
 	PRIMARY KEY (profileId)
 
 );
@@ -35,4 +38,3 @@ CREATE TABLE clap (
 	PRIMARY KEY (clapProfileId, clapArticleId)
 
 );
-

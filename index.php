@@ -73,7 +73,6 @@
 				<dd>profileName</dd>
 				<dd>profileFirstName</dd>
 				<dd>profileLastName</dd>
-				<dd>profileCity</dd>
 				<dd>profilePhone</dd>
 				<dd>profileEmail</dd>
 				<dd>profilePassword</dd>
@@ -83,12 +82,14 @@
 				<dt>Article</dt>
 				<dd>articleId</dd>
 				<dd>articleTitle</dd>
+				<dd>articleContent</dd>
 				<dd>articleDate</dd>
 				<dd>articleLength</dd>
 				<dd>articleProfileId</dd>
 			</dl>
 			<dl>
 				<dt>Clap</dt>
+				<dd>clapId</DD>
 				<dd>clapProfileId</dd>
 				<dd>clapArticleId</dd>
 				<dd>clapDate</dd>
