@@ -17,7 +17,6 @@ use Ramsey\Uuid\Uuid;
  * @version 3.0.0
  **/
 class Profile {
-	use ValidateDate;
 	use ValidateUuid;
 	/**
 	 * This is the id for this Profile; this is the primary key and will be in UUID form
@@ -117,26 +116,23 @@ public function setProfileId( $newProfileId) : void {
 		// save the new profile name
 		$this->profileName = $newProfileName;
 
-/**
- *
- */
 
-		/**
-		 * accessor method for the profile Users' first name
-		 * return string value of profile first name
-		 */
+/**
+* accessor method for the profile Users' first name
+* return string value of profile first name
+*/
 		public function getProfileFirstName() : string {
 			return ($this->profileFirstName);
 		}
 
-		/**
-		 * mutator method for profile first name varchar 128
-		 *
-		 * @param string $newProfileFirstName new value of Users' first name
-		 * @throws \InvalidArgumentException if $newProfileFirstName is not a string or insecure
-		 * @throws \RangeException if $newProfileFirstName is > 128 characters
-		 * @throws \TypeError if $newProfileFirstName is not a string
-		 */
+/**
+ * mutator method for profile first name varchar 128
+ *
+ * @param string $newProfileFirstName new value of Users' first name
+ * @throws \InvalidArgumentException if $newProfileFirstName is not a string or insecure
+ * @throws \RangeException if $newProfileFirstName is > 128 characters
+ * @throws \TypeError if $newProfileFirstName is not a string
+ */
 		public function setProfileFirstName(string $newProfileFirstName) : void {
 			// verify the Users' entered first name is safe
 			$newProfileFirstName = trim($newProfileFirstName);
@@ -145,14 +141,74 @@ public function setProfileId( $newProfileId) : void {
 				throw(new \InvalidArgumentException("sorry, Users' first name is empty or insecure"));
 			}
 
-			// verify the chosen profile name will fit in the database varchar32
-			if(strlen($newProfileName) > 32) {
-				throw(new \RangeException("sorry, chosen profile name is too large"));
+			// verify the first name will fit in the database varchar128
+			if(strlen($newProfileFirstName) > 128) {
+				throw(new \RangeException("sorry,Users' first name is too large"));
 			}
 
-			// save the new profile name
-			$this->profileName = $newProfileName;
+			// save the Users' first name
+			$this->profileFirstName = $newProfileFirstName;
 
-/**
- *
- */
+			/**
+			 * accessor method for the profile Users' last name
+			 * return string value of profile last name
+			 */
+			public function getProfileLastName() : string {
+				return ($this->profileLastName);
+			}
+
+			/**
+			 * mutator method for profile last name varchar 128
+			 *
+			 * @param string $newProfileLastName new value of Users' last name
+			 * @throws \InvalidArgumentException if $newProfileLastName is not a string or insecure
+			 * @throws \RangeException if $newProfileLastName is > 128 characters
+			 * @throws \TypeError if $newProfileLastName is not a string
+			 */
+			public function setProfileLastName(string $newProfileLastName) : void {
+				// verify the Users' entered last name is safe
+				$newProfileLastName = trim($newProfileLastName);
+				$newProfileLastName = filter_var($newProfileLastName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+				if(empty($newProfileLastName) === true) {
+					throw(new \InvalidArgumentException("sorry, Users' last name is empty or insecure"));
+				}
+
+				// verify the last name will fit in the database varchar128
+				if(strlen($newProfileLastName) > 128) {
+					throw(new \RangeException("sorry,Users' last name is too large"));
+				}
+
+				// save the Users' last name
+				$this->profileLastName = $newProfileLastName;
+
+				/**
+				 * accessor method for the profile Users' last name
+				 * return string value of profile last name
+				 */
+				public function getProfileLastName() : string {
+					return ($this->profileLastName);
+				}
+
+				/**
+				 * mutator method for profile last name varchar 128
+				 *
+				 * @param string $newProfileLastName new value of Users' last name
+				 * @throws \InvalidArgumentException if $newProfileLastName is not a string or insecure
+				 * @throws \RangeException if $newProfileLastName is > 128 characters
+				 * @throws \TypeError if $newProfileLastName is not a string
+				 */
+				public function setProfileLastName(string $newProfileLastName) : void {
+					// verify the Users' entered last name is safe
+					$newProfileLastName = trim($newProfileLastName);
+					$newProfileLastName = filter_var($newProfileLastName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+					if(empty($newProfileLastName) === true) {
+						throw(new \InvalidArgumentException("sorry, Users' last name is empty or insecure"));
+					}
+
+					// verify the last name will fit in the database varchar128
+					if(strlen($newProfileLastName) > 128) {
+						throw(new \RangeException("sorry,Users' last name is too large"));
+					}
+
+					// save the Users' last name
+					$this->profileLastName = $newProfileLastName;
