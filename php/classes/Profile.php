@@ -67,7 +67,7 @@ class Profile {
 /**
  * mutator method for the private property profileId
  *
- * Uuid/string $newProfileId new value of profile id
+ * @param Uuid|string $newProfileId new value of profile id
  * @throws \RangeException if $newProfileId is not positive
  * @throws \TypeError if $newProfileId is not a uuid or string
  */
