@@ -1,6 +1,6 @@
 <?php
 
-namespace Edu\Cnm\DataDesign;
+namespace Edu\Cnm\data_design;
 
 require_once("autoload.php");
 require_once(dirname(__DIR__) . "autoload.php");
@@ -115,6 +115,7 @@ public function setProfileId( $newProfileId) : void {
 
 		// save the new profile name
 		$this->profileName = $newProfileName;
+	}
 
 
 /**
@@ -141,6 +142,7 @@ public function setProfileId( $newProfileId) : void {
 				throw(new \InvalidArgumentException("sorry, Users' first name is empty or insecure"));
 			}
 
+
 			// verify the first name will fit in the database varchar128
 			if(strlen($newProfileFirstName) > 128) {
 				throw(new \RangeException("sorry,Users' first name is too large"));
@@ -148,14 +150,14 @@ public function setProfileId( $newProfileId) : void {
 
 			// save the Users' first name
 			$this->profileFirstName = $newProfileFirstName;
-
+		}
 			/**
 			 * accessor method for the profile Users' last name
 			 * return string value of profile last name
 			 */
 			public function getProfileLastName() : string {
 				return ($this->profileLastName);
-			}
+		}
 
 			/**
 			 * mutator method for profile last name varchar 128
@@ -180,6 +182,7 @@ public function setProfileId( $newProfileId) : void {
 
 				// save the Users' last name
 				$this->profileLastName = $newProfileLastName;
+			}
 
 				/**
 				 * accessor method for the profile Users' phone number
@@ -198,21 +201,21 @@ public function setProfileId( $newProfileId) : void {
 				 * @throws \TypeError if $newProfilePhone is not a string
 				 */
 				public function setProfilePhone(string $newProfilePhone) : void {
-					// verify the Users' entered phone number is safe
-					$newProfilePhone = trim($newProfilePhone);
-					$newProfilePhone = filter_var($newProfilePhone, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-					if(empty($newProfilePhone) === true) {
-						throw(new \InvalidArgumentException("sorry, Users' phone number is empty or insecure"));
-					}
+				// verify the Users' entered phone number is safe
+				$newProfilePhone = trim($newProfilePhone);
+				$newProfilePhone = filter_var($newProfilePhone, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+				if(empty($newProfilePhone) === true) {
+					throw(new \InvalidArgumentException("sorry, Users' phone number is empty or insecure"));
+				}
 
-					// verify the phone number will fit in the database varchar128
-					if(strlen($newProfilePhone) > 32) {
-						throw(new \RangeException("sorry, Users' phone number is too large"));
-					}
+				// verify the phone number will fit in the database varchar128
+				if(strlen($newProfilePhone) > 32) {
+					throw(new \RangeException("sorry, Users' phone number is too large"));
+				}
 
-					// save the Users' phone number
-					$this->profilePhone = $newProfilePhone;
-
+				// save the Users' phone number
+				$this->profilePhone = $newProfilePhone;
+			}
 					/**
 					 * accessor method for the profile Users' email address
 					 * return string value of profile email
@@ -230,50 +233,53 @@ public function setProfileId( $newProfileId) : void {
 					 * @throws \TypeError if $newProfileEmail is not a string
 					 */
 					public function setProfileEmail(string $newProfileEmail) : void {
-						// verify the Users' entered last name is safe
-						$newProfileEmail = trim($newProfileEmail);
-						$newProfileEmail = filter_var($newProfileEmail, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-						if(empty($newProfileEmail) === true) {
-							throw(new \InvalidArgumentException("sorry, Users' email is empty or insecure"));
-						}
+	// verify the Users' entered last name is safe
+	$newProfileEmail = trim($newProfileEmail);
+	$newProfileEmail = filter_var($newProfileEmail, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	if(empty($newProfileEmail) === true) {
+		throw(new \InvalidArgumentException("sorry, Users' email is empty or insecure"));
+	}
 
-						// verify the email will fit in the database varchar128
-						if(strlen($newProfileEmail) > 128) {
-							throw(new \RangeException("sorry,Users' email is too large"));
-						}
+	// verify the email will fit in the database varchar128
+	if(strlen($newProfileEmail) > 128) {
+		throw(new \RangeException("sorry,Users' email is too large"));
+	}
 
-						// save the Users' email
-						$this->profileEmail = $newProfileEmail;
+	// save the Users' email
+	$this->profileEmail = $newProfileEmail;
+}
+				/**
+				 * accessor method for the profile Users' password
+				 * return string value of profile password
+				 */
+				public
+				function getProfilePassword(): string {
+					return ($this->profilePassword);
+				}
 
-						/**
-						 * accessor method for the profile Users' password
-						 * return string value of profile password
-						 */
-						public function getProfilePassword() : string {
-							return ($this->profilePassword);
-						}
+				/**
+				 * mutator method for profile password varchar 128
+				 *
+				 * @param string $newProfilePassword new value of Users' password
+				 * @throws \InvalidArgumentException if $newProfilePassword is not a string or insecure
+				 * @throws \RangeException if $newProfilePassword is > 128 characters
+				 * @throws \TypeError if $newProfilePassword is not a string
+				 */
+				public
+				function setProfilePassword(string $newProfilePassword): void {
+					// verify the Users' entered password is safe
+					$newProfilePassword = trim($newProfilePassword);
+					$newProfilePassword = filter_var($newProfilePassword, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+					if(empty($newProfilePassword) === true) {
+						throw(new \InvalidArgumentException("sorry, Users' password is empty or insecure"));
+					}
 
-						/**
-						 * mutator method for profile password varchar 128
-						 *
-						 * @param string $newProfilePassword new value of Users' password
-						 * @throws \InvalidArgumentException if $newProfilePassword is not a string or insecure
-						 * @throws \RangeException if $newProfilePassword is > 128 characters
-						 * @throws \TypeError if $newProfilePassword is not a string
-						 */
-						public function setProfilePassword(string $newProfilePassword) : void {
-							// verify the Users' entered password is safe
-							$newProfilePassword = trim($newProfilePassword);
-							$newProfilePassword = filter_var($newProfilePassword, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-							if(empty($newProfilePassword) === true) {
-								throw(new \InvalidArgumentException("sorry, Users' password is empty or insecure"));
-							}
+					// verify the password will fit in the database varchar128
+					if(strlen($newProfilePassword) > 128) {
+						throw(new \RangeException("sorry, Users' password is too large"));
+					}
 
-							// verify the password will fit in the database varchar128
-							if(strlen($newProfilePassword) > 128) {
-								throw(new \RangeException("sorry, Users' password is too large"));
-							}
-
-							// save the Users' password
-							$this->profilePassword = $newProfilePassword;
-						}
+					// save the Users' password
+					$this->profilePassword = $newProfilePassword;
+				}
+			}
