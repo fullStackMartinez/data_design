@@ -1,9 +1,9 @@
 <?php
 
-namespace Edu\Cnm\data_design;
+namespace Edu\Cnm\emartinez394\data_design;
 
-require_once("autoload.php");
-require_once(dirname(__DIR__) . "autoload.php");
+require_once("autoloader.php");
+require_once(dirname(__DIR__) . "classes/autoloader.php");
 
 use Ramsey\Uuid\Uuid;
 
@@ -235,7 +235,7 @@ public function setProfileId( $newProfileId) : void {
 					public function setProfileEmail(string $newProfileEmail) : void {
 	// verify the Users' entered last name is safe
 	$newProfileEmail = trim($newProfileEmail);
-	$newProfileEmail = filter_var($newProfileEmail, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$newProfileEmail = filter_var($newProfileEmail, FILTER_SANITIZE_EMAIL, FILTER_FLAG_NO_ENCODE_QUOTES);
 	if(empty($newProfileEmail) === true) {
 		throw(new \InvalidArgumentException("sorry, Users' email is empty or insecure"));
 	}
