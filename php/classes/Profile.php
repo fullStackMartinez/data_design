@@ -10,7 +10,7 @@ use Ramsey\Uuid\Uuid;
 /**
  * Small cross section for the entity/class of the "Medium.com" Profile
  *
- * This class, Profile, can be explained as the template each user, reader and author can expect to fill out in order to participate on the Medium.com platform. It is a high class entity with a primary key, which will be used by other entiities.
+ * This class, which is named Profile, can be explained as the template each user, reader and author can expect to fill out in order to participate on the Medium.com platform. It is a high class entity with a primary key, which will be used by other entiities.
  *
  * @author Esteban Martinez <fullstackmartinez@gmail.com> <https://github.com/fullStackMartinez/data_design>
  * @author Dylan McDonald <dmcdonald21@cnm.edu>
