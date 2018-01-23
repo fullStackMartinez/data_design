@@ -1,9 +1,11 @@
 <?php
 
 namespace Edu\Cnm\DataDesign;
-require_once ("autoloader.php");
+require_once("autoloader.php");
 require_once(dirname(__DIR__) . "/classes/autoloader.php");
+
 use Ramsey\Uuid\Uuid;
+
 /**
  * Small cross section for the entity/class of the "Medium.com" Profile
  *
@@ -14,7 +16,6 @@ use Ramsey\Uuid\Uuid;
  * @package Edu\Cnm\Misquote
  *
  **/
-
 class Article implements \JsonSerializable {
 	use ValidateDate;
 	use ValidateUuid;
@@ -49,9 +50,10 @@ class Article implements \JsonSerializable {
 	 *
 	 * @return Uuid value of article id
 	 **/
-	public function getArticleId() : Uuid {
-		return($this->articleId);
+	public function getArticleId(): Uuid {
+		return ($this->articleId);
 	}
+
 	/**
 	 * mutator method for the private property articleId
 	 *
@@ -60,7 +62,7 @@ class Article implements \JsonSerializable {
 	 * @throws \TypeError if $newArticleId is not a uuid or string
 	 */
 
-	public function setArticleId( $newArticleId) : void {
+	public function setArticleId($newArticleId): void {
 		try {
 			$uuid = self::validateUuid($newArticleId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -77,8 +79,8 @@ class Article implements \JsonSerializable {
 	 *
 	 * @return Uuid value of articleProfileid
 	 **/
-	public function getArticlePofileId() : Uuid {
-		return($this->articleProfileId);
+	public function getArticlePofileId(): Uuid {
+		return ($this->articleProfileId);
 	}
 
 	/**
@@ -89,7 +91,7 @@ class Article implements \JsonSerializable {
 	 * @throws \TypeError if $newArticleProfileId is not a uuid or string
 	 */
 
-	public function setArticleProfileId( $newArticleProfileId) : void {
+	public function setArticleProfileId($newArticleProfileId): void {
 		try {
 			$uuid = self::validateUuid($newArticleProfileId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -105,7 +107,7 @@ class Article implements \JsonSerializable {
 	 * accessor method for the content of the article
 	 * return string value of content in article
 	 */
-	public function getArticleContent() : string {
+	public function getArticleContent(): string {
 		return ($this->articleContent);
 	}
 
@@ -117,7 +119,7 @@ class Article implements \JsonSerializable {
 	 * @throws \RangeException if $newArticleContent is > 12000 characters
 	 * @throws \TypeError if $newArticleContent is not a string
 	 */
-	public function setArticleContent(string $newArticleContent) : void {
+	public function setArticleContent(string $newArticleContent): void {
 		// verify the chosen profile name is safe
 		$newArticleContent = trim($newArticleContent);
 		$newArticleContent = filter_var($newArticleContent, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -139,8 +141,8 @@ class Article implements \JsonSerializable {
 	 *
 	 * @return \DateTime value of article date and time
 	 **/
-	public function getArticleDateTime() : \DateTime {
-		return($this->articleDateTime);
+	public function getArticleDateTime(): \DateTime {
+		return ($this->articleDateTime);
 	}
 
 	/**
@@ -151,7 +153,7 @@ class Article implements \JsonSerializable {
 	 * @throws \RangeException if $newArticleDateTime is a date that does not exist
 	 *
 	 **/
-	public function setArticleDateTime($newArticleDateTime = null) : void {
+	public function setArticleDateTime($newArticleDateTime = null): void {
 		// base case: if the date is null, use the current date and time
 		if($newArticleDateTime === null) {
 			$this->articleDateTime = new \DateTime();
@@ -172,9 +174,10 @@ class Article implements \JsonSerializable {
 	 * accessor method for the title of the article
 	 * return string value of title in article
 	 */
-	public function getArticleTitle() : string {
+	public function getArticleTitle(): string {
 		return ($this->articleTitle);
 	}
+
 	/**
 	 * mutator method for article title varchar 255
 	 *
@@ -183,7 +186,7 @@ class Article implements \JsonSerializable {
 	 * @throws \RangeException if $newArticleTitle is > 255 characters
 	 * @throws \TypeError if $newArticleTitle is not a string
 	 */
-	public function setArticleTitle(string $newArticleTitle) : void {
+	public function setArticleTitle(string $newArticleTitle): void {
 		// verify the chosen profile title is safe
 		$newArticleTitle = trim($newArticleTitle);
 		$newArticleTitle = filter_var($newArticleTitle, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -199,12 +202,13 @@ class Article implements \JsonSerializable {
 		// save the new title
 		$this->articleTitle = $newArticleTitle;
 	}
+
 	/**
 	 * formats the state variables for JSON serialization
 	 *
 	 * @return array resulting state variables to serialize
 	 **/
-	public function jsonSerialize() : array {
+	public function jsonSerialize(): array {
 		$fields = get_object_vars($this);
 
 		$fields["profileId"] = $this->articleId->toString();
@@ -212,6 +216,6 @@ class Article implements \JsonSerializable {
 
 		//format the date so that the front end can consume it
 		$fields["articleDateTime"] = round(floatval($this->articleDateTime->format("U.u")) * 1000);
-		return($fields);
+		return ($fields);
 	}
 }
