@@ -76,6 +76,8 @@
 				<dd>profilePhone</dd>
 				<dd>profileEmail</dd>
 				<dd>profilePassword</dd>
+				<dd>profileHash</dd>
+				<dd>profileSalt</dd>
 			</dl>
 
 			<dl>
