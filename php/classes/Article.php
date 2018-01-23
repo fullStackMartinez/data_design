@@ -199,5 +199,19 @@ class Article implements \JsonSerializable {
 		// save the new title
 		$this->articleTitle = $newArticleTitle;
 	}
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() : array {
+		$fields = get_object_vars($this);
 
+		$fields["profileId"] = $this->articleId->toString();
+		$fields["articleProfileId"] = $this->articleProfileId->toString();
+
+		//format the date so that the front end can consume it
+		$fields["articleDateTime"] = round(floatval($this->articleDateTime->format("U.u")) * 1000);
+		return($fields);
+	}
 }
