@@ -37,6 +37,7 @@ class Clap implements \JsonSerializable{
 	 * the time the clap was made, this is a dateTime data type
 	 * @var \DateTime $clapDate
 	 */
+	private $clapDate;
 
 	/**
 	 * accessor method for clap id
@@ -96,5 +97,59 @@ class Clap implements \JsonSerializable{
 	 *
 	 * @return Uuid value of clap article id
 	 */
-	public function get
+	public function getClapArticleId() : Uuid {
+		return ($this->clapArticleId);
+	}
+	/**
+	 * mutator method for the private property clap article id
+	 *
+	 * @param Uuid|string $newClapArticleId new value of clap article id
+	 * @throws \RangeException if $newClapArticleId is not positive
+	 * @throws \TypeError if $newClapArticleId is not a uuid or string
+	 */
+	public function setClapArticleId($newClapArticleId): void {
+		try {
+			$uuid = self::validateUuid($newClapArticleId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+
+		// convert and store the clap article id
+		$this->clapArticleId = $uuid;
+	}
+	/**
+	 * accessor method for clap date and time
+	 *
+	 * @return \DateTime value of clap date
+	 **/
+	public function getClapDate(): \DateTime {
+		return ($this->clapDate);
+	}
+
+	/**
+	 * mutator method for clap DateTime
+	 *
+	 * @param \DateTime|string|null $newClapDate clap date as a DateTime object or string (or null to load the current time)
+	 * @throws \InvalidArgumentException if $newClapDate is not a valid object or string
+	 * @throws \RangeException if $newClapDate is a date that does not exist
+	 *
+	 **/
+	public function setClapDate($newClapDate = null): void {
+		// base case: if the date is null, use the current date and time
+		if($newClapDate === null) {
+			$this->clapDate = new \DateTime();
+			return;
+		}
+
+		// store the like date using the ValidateDate trait
+		try {
+			$newArticleDateTime = self::validateDateTime($newClapDate);
+		} catch(\InvalidArgumentException | \RangeException $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		$this->clapDate = $newClapDate;
+	}
+
 }
