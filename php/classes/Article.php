@@ -121,7 +121,7 @@ class Article implements \JsonSerializable {
 		// verify the chosen profile name is safe
 		$newArticleContent = trim($newArticleContent);
 		$newArticleContent = filter_var($newArticleContent, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newArticleContente) === true) {
+		if(empty($newArticleContent) === true) {
 			throw(new \InvalidArgumentException("sorry, article content is empty or insecure"));
 		}
 
@@ -134,5 +134,70 @@ class Article implements \JsonSerializable {
 		$this->articleContent = $newArticleContent;
 	}
 
+	/**
+	 * accessor method for article date and time
+	 *
+	 * @return \DateTime value of article date and time
+	 **/
+	public function getArticleDateTime() : \DateTime {
+		return($this->articleDateTime);
+	}
+
+	/**
+	 * mutator method for article DateTime
+	 *
+	 * @param \DateTime|string|null $newArticleDateTime article date as a DateTime object or string (or null to load the current time)
+	 * @throws \InvalidArgumentException if $newArticleDateTime is not a valid object or string
+	 * @throws \RangeException if $newArticleDateTime is a date that does not exist
+	 *
+	 **/
+	public function setArticleDateTime($newArticleDateTime = null) : void {
+		// base case: if the date is null, use the current date and time
+		if($newArticleDateTime === null) {
+			$this->articleDateTime = new \DateTime();
+			return;
+		}
+
+		// store the like date using the ValidateDate trait
+		try {
+			$newArticleDateTime = self::validateDateTime($newArticleDateTime);
+		} catch(\InvalidArgumentException | \RangeException $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		$this->articleDateTime = $newArticleDateTime;
+	}
+
+	/**
+	 * accessor method for the title of the article
+	 * return string value of title in article
+	 */
+	public function getArticleTitle() : string {
+		return ($this->articleTitle);
+	}
+	/**
+	 * mutator method for article title varchar 255
+	 *
+	 * @param string $newArticleTitle new value of article title
+	 * @throws \InvalidArgumentException if $newArticleTitle is not a string or insecure
+	 * @throws \RangeException if $newArticleTitle is > 255 characters
+	 * @throws \TypeError if $newArticleTitle is not a string
+	 */
+	public function setArticleTitle(string $newArticleTitle) : void {
+		// verify the chosen profile title is safe
+		$newArticleTitle = trim($newArticleTitle);
+		$newArticleTitle = filter_var($newArticleTitle, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newArticleTitle) === true) {
+			throw(new \InvalidArgumentException("sorry, article title is empty or insecure"));
+		}
+
+		// verify the title of the article will fit in the database varchar 255
+		if(strlen($newArticleTitle) > 255) {
+			throw(new \RangeException("sorry, the title written exceeds the limit of characters allowed"));
+		}
+
+		// save the new title
+		$this->articleTitle = $newArticleTitle;
+	}
 
 }
