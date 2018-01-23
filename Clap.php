@@ -152,4 +152,20 @@ class Clap implements \JsonSerializable{
 		$this->clapDate = $newClapDate;
 	}
 
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize(): array {
+		$fields = get_object_vars($this);
+
+		$fields["clapId"] = $this->clapId->toString();
+		$fields["clapProfileId"] = $this->clapProfileId->toString();
+		$fields["clapArticleId"] = $this->clapArticleId->toString();
+
+		//format the date so that the front end can consume it
+		$fields["clapDate"] = round(floatval($this->clapId->format("U.u")) * 1000);
+		return ($fields);
+	}
 }
