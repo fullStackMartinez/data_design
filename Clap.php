@@ -168,4 +168,5 @@ class Clap implements \JsonSerializable{
 		$fields["clapDate"] = round(floatval($this->clapId->format("U.u")) * 1000);
 		return ($fields);
 	}
+
 }
