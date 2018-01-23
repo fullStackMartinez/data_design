@@ -1,6 +1,6 @@
 <?php
 
-namespace Edu\Cnm\emartinez394\data_design;
+namespace Edu\Cnm\DataDesign;
 
 require_once("autoloader.php");
 require_once(dirname(__DIR__) . "classes/autoloader.php");
@@ -16,7 +16,7 @@ use Ramsey\Uuid\Uuid;
  * @author Dylan McDonald <dmcdonald21@cnm.edu>
  * @version 3.0.0
  **/
-class Profile {
+class Profile implements \JsonSerializable {
 	use ValidateUuid;
 	/**
 	 * This is the id for this Profile; this is the primary key and will be in UUID form
@@ -282,4 +282,18 @@ public function setProfileId( $newProfileId) : void {
 					// save the Users' password
 					$this->profilePassword = $newProfilePassword;
 				}
+
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() : array {
+		$fields = get_object_vars($this);
+
+		$fields["profileId"] = $this->profileId->toString();
+
+		return($fields);
+	}
+
 			}
