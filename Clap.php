@@ -165,7 +165,7 @@ class Clap implements \JsonSerializable{
 		$fields["clapArticleId"] = $this->clapArticleId->toString();
 
 		//format the date so that the front end can consume it
-		$fields["clapDate"] = round(floatval($this->clapId->format("U.u")) * 1000);
+		$fields["clapDate"] = round(floatval($this->clapDate->format("U.u")) * 1000);
 		return ($fields);
 	}
 
