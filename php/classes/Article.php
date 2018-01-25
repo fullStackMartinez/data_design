@@ -61,18 +61,20 @@ class Article implements \JsonSerializable {
 	 * @param string|Uuid $newArticleProfileId id of the Profile that wrote this specific article
 	 * @param string $newArticleContent written string of the article content
 	 * @param \DateTime|string|null $newArticleDateTime date and time the article was written
+	 * @param string $newArticleTitle string title of the article
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values don't fit within their limits
 	 * @throws \TypeError if data types violate type
 	 * @throws \Exception if some other exception occurs
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	public function __construct($newArticleId, $newArticleProfileId, string $newArticleContent, \DateTime$newArticleDateTime = null) {
+	public function __construct($newArticleId, $newArticleProfileId, string $newArticleContent, \DateTime$newArticleDateTime = null, string $newArticleTitle) {
 		try {
 			$this->setArticleId($newArticleId);
 			$this->setArticleProfileId($newArticleProfileId);
 			$this->setArticleContent($newArticleContent);
 			$this->setArticleDateTime($newArticleDateTime);
+			$this->setArticleTitle($newArticleTitle);
 		}
 			//determine what exception type was thrown
 		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {

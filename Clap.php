@@ -144,7 +144,7 @@ class Clap implements \JsonSerializable{
 
 		// store the like date using the ValidateDate trait
 		try {
-			$newArticleDateTime = self::validateDateTime($newClapDate);
+			$newClapDate = self::validateDateTime($newClapDate);
 		} catch(\InvalidArgumentException | \RangeException $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
