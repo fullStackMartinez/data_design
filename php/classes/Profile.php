@@ -306,9 +306,9 @@ class Profile implements \JsonSerializable {
 	 * mutator method for profile hash password
 	 *
 	 * @param string $newProfileHash
-	 * @throws \InvalidArgumentException if the hash for the profile password is not secure
-	 * @throws \RangeException if the password hash is not 128 characters
-	 * @throws \TypeError if password hash is not a string
+	 * @throws \InvalidArgumentException if $newProfileHash for the profile password is not secure
+	 * @throws \RangeException if the password $newProfileHash is not 128 characters
+	 * @throws \TypeError if password $newProfileHash is not a string
 	 */
 	public function setProfileHash(string $newProfileHash): void {
 		//make sure hash is safe and formatted correctly
@@ -327,6 +327,37 @@ class Profile implements \JsonSerializable {
 		}
 		//save the Profiles password hash
 		$this->profileHash = $newProfileHash;
+	}
+	/**
+	 *accessor method for profile salt
+	 *
+	 * @return string for salt
+	 */
+	public function getProfileSalt(): string {
+		return $this->profileSalt;
+	}
+	/**
+	 * mutator method for profile salt
+	 *
+	 * @param string $newProfileSalt
+	 * @throws \InvalidArgumentException if $newProfileSalt is not secure
+	 * @throws \RangeException if $newProfileSalt is not 64 characters
+	 * @throws \TypeError if $newProfileSalt is not a string
+	 */
+	public function setProfileSalt(string $newProfileSalt): void {
+		//make sure that profile salt is formatted
+		$newProfileSalt = trim($newProfileSalt);
+		$newProfileSalt = strtolower($newProfileSalt);
+		//make sure that the profile salt is a string
+		if(!ctype_xdigit($newProfileSalt)) {
+			throw(new \InvalidArgumentException("sorry, profile salt is empty or insecure"));
+		}
+		//make sure that the salt is exactly 64 characters.
+		if(strlen($newProfileSalt) !== 64) {
+			throw(new \RangeException("sorry, profile salt must be 128 characters"));
+		}
+		//save the profile salt
+		$this->profileSalt = $newProfileSalt;
 	}
 
 	/**
