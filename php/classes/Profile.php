@@ -55,9 +55,14 @@ class Profile implements \JsonSerializable {
 	private $profilePassword;
 	/**
 	 * hash for profile password
-	 * @var string $profilePassword ;
+	 * @var string $profileHash;
 	 **/
-	private $profilePassword;
+	private $profileHash;
+	/**
+	 * salt for Profile
+	 * @var string $profileSalt;
+	 **/
+	private $profileSalt;
 
 	/**
 	 *  accessor method for getting the profile Id of user
@@ -289,6 +294,39 @@ class Profile implements \JsonSerializable {
 
 		// save the Users' password
 		$this->profilePassword = $newProfilePassword;
+	}
+	/**
+	 * accessor method for the hash for the profile password
+	 * return string value for hash
+	 */
+	public function getProfileHash(): string {
+		return ($this->profileHash);
+	}
+	/**
+	 * mutator method for profile hash password
+	 *
+	 * @param string $newProfileHash
+	 * @throws \InvalidArgumentException if the hash for the profile password is not secure
+	 * @throws \RangeException if the password hash is not 128 characters
+	 * @throws \TypeError if password hash is not a string
+	 */
+	public function setProfileHash(string $newProfileHash): void {
+		//make sure hash is safe and formatted correctly
+		$newProfileHash = trim($newProfileHash);
+		$newProfileHash = strtolower($newProfileHash);
+		if(empty($newProfileHash) === true) {
+			throw(new \InvalidArgumentException("sorry, the password hash is either empty or insecure"));
+		}
+		//make sure the hash is a string representation of a hexadecimal
+		if(!ctype_xdigit($newProfileHash)) {
+			throw(new \InvalidArgumentException("sorry, the password hash is either empty or insecure"));
+		}
+		//make sure that the password hash is exactly 128 characters.
+		if(strlen($newProfileHash) !== 128) {
+			throw(new \RangeException("sorry, password hash must be exactly 128 characters"));
+		}
+		//save the Profiles password hash
+		$this->profileHash = $newProfileHash;
 	}
 
 	/**
