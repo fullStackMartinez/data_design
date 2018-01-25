@@ -65,6 +65,43 @@ class Profile implements \JsonSerializable {
 	private $profileSalt;
 
 	/**
+	 * __constructor method for this Profile class
+	 *
+	 * @param string|Uuid $newProfileId of this entity or null if a new user
+	 * @param string $newProfileName string that contains the chosen display name of the profile owner
+	 * @param string $newProfileFirstName string which contains the first name of the profile owner
+	 * @param string $newProfileLastName string which contains the last name of the profile owner
+	 * @param string $newProfilePhone string with the contact phone number of profile owner
+	 * @param string $newProfileEmail string which contains the contact email of the profile owner
+	 * @param string $newProfilePassword string with the chosen password to the profile
+	 * @param string $newProfileHash string containing password hash for discretion
+	 * @param string $newProfileSalt string containing passoword salt
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are outside of their allotted memory
+	 * @throws \TypeError if a data type violates data limits
+	 * @throws \Exception if other exceptions are needed
+	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
+	 **/
+	public function __construct($newProfileId, string $newProfileName, string $newProfileFirstName, string $newProfileLastName, ?string $newProfilePhone, string $newProfileEmail, string $newProfilePassword, string $newProfileHash, string $newProfileSalt) {
+		try {
+			$this->setProfileId($newProfileId);
+			$this->setProfileName($newProfileName);
+			$this->setProfileFirstName($newProfileFirstName);
+			$this->setProfileLastName($newProfileLastName);
+			$this->setProfilePhone($newProfilePhone);
+			$this->setProfileEmail($newProfileEmail);
+			$this->setProfilePassword($newProfilePassword);
+			$this->setProfileHash($newProfileHash);
+			$this->setProfileSalt($newProfileSalt);
+		} catch(\InvalidArgumentException | \RangeException |\TypeError | \Exception $exception) {
+			//determine what exception type was thrown
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+	}
+
+
+	/**
 	 *  accessor method for getting the profile Id of user
 	 *
 	 * @return Uuid value of profileID

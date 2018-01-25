@@ -6,8 +6,8 @@ DROP TABLE IF EXISTS profile;
 CREATE TABLE profile (
 	profileId BINARY(16) NOT NULL,
 	profileName VARCHAR(32) NOT NULL,
-	firstName VARCHAR(128) NOT NULL,
-	lastName VARCHAR(128) NOT NULL,
+	profileFirstName VARCHAR(128) NOT NULL,
+	profileLastName VARCHAR(128) NOT NULL,
 	profilePhone VARCHAR(32),
 	profileEmail VARCHAR(128) NOT NULL,
 	profilePassword VARCHAR(128) NOT NULL,
