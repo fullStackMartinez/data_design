@@ -7,7 +7,7 @@ require_once(dirname(__DIR__) . "/classes/autoloader.php");
 use Ramsey\Uuid\Uuid;
 
 /**
- * Small cross section for the entity/class of the "Medium.com" Profile
+ * Small cross section for the entity/class of the "Medium.com" Article
  *
  * This class, which is named Article, can be explained as the template each user, reader and author can expect to fill out in order to write/read articles on the Medium.com platform.
  *
