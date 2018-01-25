@@ -11,6 +11,8 @@ CREATE TABLE profile (
 	profilePhone VARCHAR(32),
 	profileEmail VARCHAR(128) NOT NULL,
 	profilePassword VARCHAR(128) NOT NULL,
+	profileHash VARCHAR (128) NOT NULL,
+	profileSalt VARCHAR (128) NOT NULL,
 	UNIQUE (profileEmail),
 	PRIMARY KEY (profileId)
 

@@ -53,6 +53,11 @@ class Profile implements \JsonSerializable {
 	 * @var string $profilePassword ;
 	 **/
 	private $profilePassword;
+	/**
+	 * hash for profile password
+	 * @var string $profilePassword ;
+	 **/
+	private $profilePassword;
 
 	/**
 	 *  accessor method for getting the profile Id of user
