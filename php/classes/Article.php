@@ -55,6 +55,33 @@ class Article implements \JsonSerializable {
 	}
 
 	/**
+	 * constructor for the Article class
+	 *
+	 * @param string|Uuid $newArticleId the id for the specific article written
+	 * @param string|Uuid $newArticleProfileId id of the Profile that wrote this specific article
+	 * @param string $newArticleContent written string of the article content
+	 * @param \DateTime|string|null $newArticleDateTime date and time the article was written
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values don't fit within their limits
+	 * @throws \TypeError if data types violate type
+	 * @throws \Exception if some other exception occurs
+	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
+	 **/
+	public function __construct($newArticleId, $newArticleProfileId, string $newArticleContent, \DateTime$newArticleDateTime = null) {
+		try {
+			$this->setArticleId($newArticleId);
+			$this->setArticleProfileId($newArticleProfileId);
+			$this->setArticleContent($newArticleContent);
+			$this->setArticleDateTime($newArticleDateTime);
+		}
+			//determine what exception type was thrown
+		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+	}
+
+	/**
 	 * mutator method for the private property articleId
 	 *
 	 * @param Uuid|string $newArticleId new value of article id
