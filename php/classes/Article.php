@@ -231,7 +231,136 @@ class Article implements \JsonSerializable {
 		// save the new title
 		$this->articleTitle = $newArticleTitle;
 	}
+	/**
+	 * inserts Tweet into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo) : void {
 
+		// create query template
+		$query = "INSERT INTO article(articleId, articleProfileId, articleContent, articleTitle, articleDateTime) VALUES(:articleId, :articleProfileId, :articleContent, :articleTitle, :articleDateTime)";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holders in the template
+		$formattedDate = $this->articleDateTime->format("Y-m-d H:i:s.u");
+		$parameters = ["articleId" => $this->articleId->getBytes(), "articleProfileId" => $this->articleProfileId->getBytes(), "articleContent" => $this->articleContent, "articleTitle" => $this->articleTitle, "articleDateTime" => $formattedDate];
+		$statement->execute($parameters);
+	}
+	/**
+	 * deletes article from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo) : void {
+
+		// create query template
+		$query = "DELETE FROM article WHERE articleId = :articleId";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holder in the template
+		$parameters = ["articleId" => $this->articleId->getBytes()];
+		$statement->execute($parameters);
+	}
+	/**
+	 * updates article in mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo) : void {
+
+		// create query template
+		$query = "UPDATE article SET articleProfileId = :articleProfileId, articleContent = :articleContent, articleTitle = :articleTitle, articleDateTime = :articleDateTime WHERE articleId = :articleId";
+		$statement = $pdo->prepare($query);
+
+
+		$formattedDate = $this->articleDateTime->format("Y-m-d H:i:s.u");
+		$parameters = ["articleId" => $this->articleId->getBytes(),"articleProfileId" => $this->articleProfileId->getBytes(), "articleContent" => $this->articleContent, "articleTitle" => $this->articleTitle, "articleDateTime" => $formattedDate];
+		$statement->execute($parameters);
+	}
+	/**
+	 * gets the article by articleId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $articleId  the id we will use to search for this specific article
+	 * @return Article|null if article found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when a variable are not the correct data type
+	 **/
+	public static function getArticleByArticleId(\PDO $pdo, $articleId) : ?Article {
+		// sanitize the articleId before searching
+		try {
+			$articleId = self::validateUuid($articleId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+
+		// create query template
+		$query = "SELECT articleId, articleProfileId, articleContent, articleTitle, articleDateTime FROM article WHERE articleId = :articleId";
+		$statement = $pdo->prepare($query);
+
+		// bind the article id to the place holder in the template
+		$parameters = ["articleId" => $articleId->getBytes()];
+		$statement->execute($parameters);
+
+		// grab the article from mySQL
+		try {
+			$article = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$article = new Article($row["articleId"], $row["articleProfileId"], $row["articleContent"], $row["articleTitle"], $row["articleDateTime"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($article);
+	}
+	/**
+	 * gets the article by the id of the profile user
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $articleProfileId profile id to search by
+	 * @return \SplFixedArray SplFixedArray of Article found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getArticleByArticleProfileId(\PDO $pdo, $articleProfileId) : \SplFixedArray {
+
+		try {
+			$articleProfileId = self::validateUuid($articleProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+
+		// create query template
+		$query = "SELECT tweetId, tweetProfileId, tweetContent, tweetDate FROM tweet WHERE tweetProfileId = :tweetProfileId";
+		$statement = $pdo->prepare($query);
+		// bind the tweet profile id to the place holder in the template
+		$parameters = ["tweetProfileId" => $tweetProfileId->getBytes()];
+		$statement->execute($parameters);
+		// build an array of tweets
+		$tweets = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$tweet = new Tweet($row["tweetId"], $row["tweetProfileId"], $row["tweetContent"], $row["tweetDate"]);
+				$tweets[$tweets->key()] = $tweet;
+				$tweets->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($tweets);
+	}
 	/**
 	 * formats the state variables for JSON serialization
 	 *
