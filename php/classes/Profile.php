@@ -75,7 +75,7 @@ class Profile implements \JsonSerializable {
 	 * @param string $newProfileEmail string which contains the contact email of the profile owner
 	 * @param string $newProfilePassword string with the chosen password to the profile
 	 * @param string $newProfileHash string containing password hash for discretion
-	 * @param string $newProfileSalt string containing passoword salt
+	 * @param string $newProfileSalt string containing password salt
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are outside of their allotted memory
 	 * @throws \TypeError if a data type violates data limits
@@ -395,6 +395,49 @@ class Profile implements \JsonSerializable {
 		}
 		//save the profile salt
 		$this->profileSalt = $newProfileSalt;
+	}
+	/**
+	 * inserts this Profile class into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo): void {
+		// create the INSERT INTO query template
+		$query = "INSERT INTO profile(profileId, profileName, profileFirstName, profileLastName,  profilePhone, profileEmail, profilePassword, profileHash, profileSalt) VALUES (:profileId, :profileName, :profileFirstName, :profileLastName, :profilePhone, :profileEmail, :profilePassword, :profileHash, :profileSalt)";
+		$statement = $pdo->prepare($query);
+		$parameters = ["profileId" => $this->profileId->getBytes(), "profileName" => $this->profileName, "profileFirstName" => $this->profileFirstName, "profileLastName" => $this->profileLastName, "profilePhone" => $this->profilePhone, "profileEmail" => $this->profileEmail, "profilePassword" => $this->profilePassword, "profileHash" => $this->profileHash, "profileSalt" => $this->profileSalt];
+		$statement->execute($parameters);
+	}
+	/**
+	 * deletes this Profile class from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo): void {
+		// create DELETE FROM query template
+		$query = "DELETE FROM profile WHERE profileId = :profileId";
+		$statement = $pdo->prepare($query);
+		//bind the member variables to the place holders in the template
+		$parameters = ["profileId" => $this->profileId->getBytes()];
+		$statement->execute($parameters);
+	}
+	/**
+	 * updates this Profile class from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 **/
+	public function update(\PDO $pdo): void {
+		// create UPDATE query template
+		$query = "UPDATE profile SET profileId = :profileId, profileName = :profileName, profileFirstName = :profileFirstName, profileLastName = :profileLastName, profilePhone = :profilePhone, profileEmail = :profileEmail, profilePassword = :profilePassword, profileHash = :profileHash, profileSalt = :profileSalt WHERE profileId = :profileId";
+		$statement = $pdo->prepare($query);
+		// bind the member variables to the place holders in the template
+		$parameters = ["profileId" => $this->profileId->getBytes(), "profileName" => $this->profileName, "profileFirstName" => $this->profileFirstName, "profileLastName" => $this->profileLastName, "profilePhone" => $this->profilePhone, "profileEmail" => $this->profileEmail, "profilePassword" => $this->profilePassword, "profileHash" => $this->profileHash, "profileSalt" => $this->profileSalt];
+		$statement->execute($parameters);
 	}
 
 	/**
