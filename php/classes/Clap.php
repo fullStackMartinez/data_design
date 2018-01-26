@@ -6,7 +6,7 @@ require_once(dirname(__DIR__) . "/classes/autoloader.php");
 
 use Ramsey\Uuid\Uuid;
 /**
- * Small cross section for the entity/class of the "Medium.com" Profile
+ * Small cross section for the entity/class of claps given and received within Medium.com
  *
  * This class, which is named Clap, is a template that must be followed when saving data on claps, whether it be the profile making the clap, or the article receiving a clap, on the Medium.com platform.
  *
@@ -38,6 +38,32 @@ class Clap implements \JsonSerializable{
 	 * @var \DateTime $clapDate
 	 */
 	private $clapDate;
+
+	/**
+	 * constructor for the clap class
+	 *
+	 * @param string|Uuid $newClapId id of a specific clap
+	 * @param string|Uuid $newClapProfileId id of the profile that made the clap
+	 * @param string|Uuid $newClapArticleId id of the article that received the clap
+	 * @param \DateTime|null $newClapDate date the clap was made
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are not within the limits
+	 * @throws \TypeError if data types violate data types
+	 * @throws \Exception if some other exception is thrown
+	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
+	 */
+	public function __construct( $newClapId, $newClapProfileId, $newClapArticleId, $newClapDate = null) {
+		try {
+			$this->setClapId($newClapId);
+			$this->setClapProfileId($newClapProfileId);
+			$this->setClapArticleId($newClapArticleId);
+			$this->setClapDate($newClapDate);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			// determine what exception type was thrown
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+	}
 
 	/**
 	 * accessor method for clap id
