@@ -341,25 +341,25 @@ class Article implements \JsonSerializable {
 		}
 
 		// create query template
-		$query = "SELECT tweetId, tweetProfileId, tweetContent, tweetDate FROM tweet WHERE tweetProfileId = :tweetProfileId";
+		$query = "SELECT articleId, articleProfileId, articleContent, articleTitle, articleDateTime FROM article WHERE articleProfileId = :articleProfileId";
 		$statement = $pdo->prepare($query);
-		// bind the tweet profile id to the place holder in the template
-		$parameters = ["tweetProfileId" => $tweetProfileId->getBytes()];
+		// bind the article profile id to the place holder in the template
+		$parameters = ["articleProfileId" => $articleProfileId->getBytes()];
 		$statement->execute($parameters);
-		// build an array of tweets
-		$tweets = new \SplFixedArray($statement->rowCount());
+		// build an array of articles
+		$articles = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$tweet = new Tweet($row["tweetId"], $row["tweetProfileId"], $row["tweetContent"], $row["tweetDate"]);
-				$tweets[$tweets->key()] = $tweet;
-				$tweets->next();
+				$article = new Article($row["articleId"], $row["articleProfileId"], $row["articleContent"], $row["articleTitle"], $row["articleDateTime"]);
+				$articles[$articles->key()] = $article;
+				$articles->next();
 			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-		return($tweets);
+		return($articles);
 	}
 	/**
 	 * formats the state variables for JSON serialization
