@@ -200,7 +200,7 @@ class Clap implements \JsonSerializable{
 	 **/
 	public function delete(\PDO $pdo) : void {
 		// create query template
-		$query = "DELETE FROM clap WHERE clapId = clapId AND clapProfileId = :clapProfileId AND clapArticleIdId = :clapArticleId";
+		$query = "DELETE FROM clap WHERE clapId = :clapId AND clapProfileId = :clapProfileId AND clapArticleId = :clapArticleId";
 		$statement = $pdo->prepare($query);
 		//bind the member variables to the placeholders in the template
 		$parameters = ["clapId" => $this->clapId->getBytes(), "clapProfileId" => $this->clapProfileId->getBytes(), "clapArticleId" => $this->clapArticleId->getBytes()];
