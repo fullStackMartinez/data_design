@@ -177,6 +177,36 @@ class Clap implements \JsonSerializable{
 		}
 		$this->clapDate = $newClapDate;
 	}
+	/**
+	 * inserts this clap into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 **/
+	public function insert(\PDO $pdo) : void {
+		// create query template
+		$query = "INSERT INTO clap(clapId, clapProfileId, clapArticleId, clapDate) VALUES(:clapId, :clapProfileId, :clapArticleId, :clapDate)";
+		$statement = $pdo->prepare($query);
+		// bind the member variables to the place holders in the template
+		$formattedDate = $this->clapDate->format("Y-m-d H:i:s.u");
+		$parameters = ["clapId" => $this->clapId->getBytes(), "clapProfileId" => $this->clapProfileId->getBytes(), "clapArticleId" => $this->clapArticleId->getBytes(), "clapDate" => $formattedDate];
+		$statement->execute($parameters);
+	}
+	/**
+	 * deletes clap from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 **/
+	public function delete(\PDO $pdo) : void {
+		// create query template
+		$query = "DELETE FROM clap WHERE clapId = clapId AND clapProfileId = :clapProfileId AND clapArticleIdId = :clapArticleId";
+		$statement = $pdo->prepare($query);
+		//bind the member variables to the placeholders in the template
+		$parameters = ["clapId" => $this->clapId->getBytes(), "clapProfileId" => $this->clapProfileId->getBytes(), "clapArticleId" => $this->clapArticleId->getBytes()];
+		$statement->execute($parameters);
+	}
+
 
 	/**
 	 * formats the state variables for JSON serialization
