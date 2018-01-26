@@ -492,7 +492,7 @@ class Profile implements \JsonSerializable {
 			throw(new \PDOException("sorry, not a valid profile name"));
 		}
 		// create query template
-		$query = "SELECT  profileId, profileFirstName, profileLastName, profilePhone, profileEmail, profilePassword, profileHash, profileSalt FROM profile WHERE profileName = :profileName";
+		$query = "SELECT  profileId, profileName, profileFirstName, profileLastName, profilePhone, profileEmail, profilePassword, profileHash, profileSalt FROM profile WHERE profileName = :profileName";
 		$statement = $pdo->prepare($query);
 		// bind the profile at handle to the place holder in the template
 		$parameters = ["profileName" => $profileName];
@@ -525,12 +525,12 @@ class Profile implements \JsonSerializable {
 		$profileEmail = trim($profileEmail);
 		$profileEmail = filter_var($profileEmail, FILTER_VALIDATE_EMAIL);
 		if(empty($profileEmail) === true) {
-			throw(new \PDOException("not a valid email"));
+			throw(new \PDOException("sorry, this is not a valid email"));
 		}
 		// create query template
-		$query = "SELECT profileId, profileActivationToken, profileAtHandle, profileAvatarUrl, profileEmail, profileHash, profilePhone, profileSalt FROM profile WHERE profileEmail = :profileEmail";
+		$query = "SELECT profileId, profileName, profileFirstName, profileLastName, profilePhone, profileEmail, profilePassword, profileHash, profileSalt FROM profile WHERE profileEmail = :profileEmail";
 		$statement = $pdo->prepare($query);
-		// bind the profile id to the place holder in the template
+		// bind the profile email to the place holder in the template
 		$parameters = ["profileEmail" => $profileEmail];
 		$statement->execute($parameters);
 		// grab the Profile from mySQL
@@ -539,7 +539,7 @@ class Profile implements \JsonSerializable {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileAtHandle"], $row["profileAvatarUrl"], $row["profileEmail"], $row["profileHash"], $row["profilePhone"], $row["profileSalt"]);
+				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileFirstName"], $row["profileLastName"], $row["profilePhone"], $row["profileEmail"], $row["profilePassword"], $row["profileHash"], $row["profileSalt"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldn't be converted, rethrow it
