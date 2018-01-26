@@ -362,6 +362,50 @@ class Article implements \JsonSerializable {
 		return($articles);
 	}
 	/**
+	 * gets the article by content
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $articleContent article content that we will search for
+	 * @return \SplFixedArray SplFixedArray of Articles found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getArticleByArticleContent(\PDO $pdo, string $articleContent) : \SplFixedArray {
+		// sanitize the article content before searching
+		$articleContent = trim($articleContent);
+		$articleContent = filter_var($articleContent, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($articleContent) === true) {
+			throw(new \PDOException("sorry, article content is invalid or unsafe"));
+		}
+
+		// escape any mySQL wild cards
+		$articleContent = str_replace("_", "\\_", str_replace("%", "\\%", $articleContent));
+
+		// create query template
+		$query = "SELECT articleId, articleProfileId, articleContent, articleTitle, articleDateTime FROM article WHERE articleContent LIKE :articleContent";
+		$statement = $pdo->prepare($query);
+
+		// bind the article content to the place holder in the template
+		$articleContent = "%$articleContent%";
+		$parameters = ["articleContent" => $articleContent];
+		$statement->execute($parameters);
+
+		// build an array of articles
+		$articles = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$article = new Article($row["articleId"], $row["articleProfileId"], $row["articleContent"], $row["articleTitle"], $row["articleDateTime"]);
+				$articles[$articles->key()] = $article;
+				$articles->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($articles);
+	}
+	/**
 	 * formats the state variables for JSON serialization
 	 *
 	 * @return array resulting state variables to serialize
