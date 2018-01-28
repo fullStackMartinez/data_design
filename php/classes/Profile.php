@@ -3,7 +3,7 @@
 namespace Edu\Cnm\DataDesign;
 
 require_once("autoloader.php");
-require_once(dirname(__DIR__) . "classes/autoloader.php");
+require_once(dirname(__DIR__, 2) . "classes/autoloader.php");
 
 use Ramsey\Uuid\Uuid;
 
@@ -560,5 +560,4 @@ class Profile implements \JsonSerializable {
 
 		return ($fields);
 	}
-
 }

@@ -1,8 +1,9 @@
 <?php
 
 namespace Edu\Cnm\DataDesign;
+
 require_once("autoloader.php");
-require_once(dirname(__DIR__, 2) . "/classes/autoloader.php");
+require_once(dirname(__DIR__, 2) . "classes/autoloader.php");
 
 use Ramsey\Uuid\Uuid;
 /**
@@ -236,7 +237,7 @@ class Clap implements \JsonSerializable{
 		$query = "SELECT clapProfileId, clapId, clapArticleId, clapDate FROM clap WHERE clapProfileId = :clapProfileId AND clapId = :clapId AND $clapArticleId = :$clapArticleId";
 		$statement = $pdo->prepare($query);
 		// bind the clap profile id, clap id and article id to the place holder in the template
-		$parameters = ["clapProfileId" => $clapProfileId->getBytes(), "clapId" => $clapId->getBytes, "clapArticleId" => $clapArticleId->getBytes()];
+		$parameters = ["clapProfileId" => $clapProfileId->getBytes(), "clapId" => $clapId->getBytes(), "clapArticleId" => $clapArticleId->getBytes()];
 		$statement->execute($parameters);
 		// search for and retrieve clap from mySQL
 		try {

@@ -1,8 +1,9 @@
 <?php
 
 namespace Edu\Cnm\DataDesign;
+
 require_once("autoloader.php");
-require_once(dirname(__DIR__) . "/classes/autoloader.php");
+require_once(dirname(__DIR__, 2) . "classes/autoloader.php");
 
 use Ramsey\Uuid\Uuid;
 
@@ -189,7 +190,7 @@ class Article implements \JsonSerializable {
 			return;
 		}
 
-		// store the like date using the ValidateDate trait
+		// store the article date using the ValidateDate trait
 		try {
 			$newArticleDateTime = self::validateDateTime($newArticleDateTime);
 		} catch(\InvalidArgumentException | \RangeException $exception) {
