@@ -322,7 +322,41 @@ class Clap implements \JsonSerializable{
 		}
 		return ($claps);
 	}
-
+	/**
+	 * gets the clap by the id of the article that contains the clap
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $clapArticleId article id
+	 * @return \SplFixedArray array of Likes found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 **/
+	public static function getClapByClapArticleId(\PDO $pdo, string $clapArticleId) : \SplFixedArray {
+		try {
+			$clapArticleId = self::validateUuid($clapArticleId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT clapProfileId, clapId, clapArticleId, clapDate FROM clap WHERE clapArticleId = :clapArticleId";
+		$statement = $pdo->prepare($query);
+		// bind the member variables to the place holders in the template
+		$parameters = ["clapArticleId" => $clapArticleId->getBytes()];
+		$statement->execute($parameters);
+		// build the array of likes
+		$claps = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$clap = new Clap($row["clapProfileId"], $row["clapId"], $row["clapArticleId"], $row["clapDate"]);
+				$claps[$claps->key()] = $clap;
+				$claps->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($claps);
+	}
 
 	/**
 	 * formats the state variables for JSON serialization
