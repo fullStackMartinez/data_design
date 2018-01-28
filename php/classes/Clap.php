@@ -2,7 +2,7 @@
 
 namespace Edu\Cnm\DataDesign;
 require_once("autoloader.php");
-require_once(dirname(__DIR__) . "/classes/autoloader.php");
+require_once(dirname(__DIR__, 2) . "/classes/autoloader.php");
 
 use Ramsey\Uuid\Uuid;
 /**
@@ -205,6 +205,52 @@ class Clap implements \JsonSerializable{
 		//bind the member variables to the placeholders in the template
 		$parameters = ["clapId" => $this->clapId->getBytes(), "clapProfileId" => $this->clapProfileId->getBytes(), "clapArticleId" => $this->clapArticleId->getBytes()];
 		$statement->execute($parameters);
+	}
+	/**
+	 * gets the clap by clap id, the profile id that gave the clap, and the article id that contains the clap
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $clapProfileId profile id that gave the clap
+	 * @param string $clapId actual clap id to put into our search
+	 * @param string $clapArticleId article that contains the clap we are searching for
+	 * @return clap|null clap found or null if not found
+	 */
+	public static function getClapByClapIdAndClapProfileIdAndClapArticleId(\PDO $pdo, string $clapProfileId, string $clapId, string $clapArticleId) : ?Clap {
+		//
+		try {
+			$clapProfileId = self::validateUuid($clapProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		try {
+			$clapId = self::validateUuid($clapId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		try{
+		$clapArticleId = self::validateUuid($clapArticleId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+}
+		// create query template
+		$query = "SELECT clapProfileId, clapId, clapArticleId, clapDate FROM clap WHERE clapProfileId = :clapProfileId AND clapId = :clapId AND $clapArticleId = :$clapArticleId";
+		$statement = $pdo->prepare($query);
+		// bind the clap profile id, clap id and article id to the place holder in the template
+		$parameters = ["clapProfileId" => $clapProfileId->getBytes(), "clapId" => $clapId->getBytes, "clapArticleId" => $clapArticleId->getBytes()];
+		$statement->execute($parameters);
+		// search for and retrieve clap from mySQL
+		try {
+			$clap = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$clap = new Clap($row["clapProfileId"], $row["clapId"], $row["clapArticleId"], $row["clapDate"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($clap);
 	}
 
 	/**
