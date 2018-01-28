@@ -252,6 +252,77 @@ class Clap implements \JsonSerializable{
 		}
 		return ($clap);
 	}
+	/**
+	 * gets the clap by the profile id that made the clap
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $clapProfileId profile id of the clap maker
+	 * @return \SplFixedArray SplFixedArray of claps found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 **/
+	public static function getClapByClapProfileId(\PDO $pdo, string $clapProfileId) : \SPLFixedArray {
+		try {
+			$clapProfileId = self::validateUuid($clapProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT clapProfileId, clapId, clapArticleId, clapDate FROM clap WHERE clapProfileId = :clapProfileId";
+		$statement = $pdo->prepare($query);
+		// bind the member variables to the place holders in the template
+		$parameters = ["clapProfileId" => $clapProfileId->getBytes()];
+		$statement->execute($parameters);
+		// build an array of claps
+		$claps = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$clap = new Clap($row["clapProfileId"], $row["clapId"], $row["clapArticleId"], $row["clapDate"]);
+				$claps[$claps->key()] = $clap;
+				$claps->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($claps);
+	}
+	/**
+	 * gets the clap by clap id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $clapId clap id
+	 * @return \SplFixedArray array of Likes found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 **/
+	public static function getClapByClapId(\PDO $pdo, string $clapId) : \SplFixedArray {
+		try {
+			$clapId = self::validateUuid($clapId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT clapProfileId, clapId, clapArticleId, clapDate FROM clap WHERE clapId = :clapId";
+		$statement = $pdo->prepare($query);
+		// bind the member variables to the place holders in the template
+		$parameters = ["clapId" => $clapId->getBytes()];
+		$statement->execute($parameters);
+		// build the array of claps
+		$claps = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$clap = new Clap($row["clapProfileId"], $row["clapId"], $row["clapArticleId"], $row["clapDate"]);
+				$claps[$claps->key()] = $clap;
+				$claps->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($claps);
+	}
+
 
 	/**
 	 * formats the state variables for JSON serialization
